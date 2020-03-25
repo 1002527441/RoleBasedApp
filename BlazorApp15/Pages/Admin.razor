@@ -1,14 +1,42 @@
 ﻿@page "/admin"
-@attribute [Authorize(Roles ="Admin")]
+
+@using  Microsoft.AspNetCore.Identity
+@using BlazorApp15.Data
+    @inject RoleManager<IdentityRole>   roleManager
+
+    @attribute [Authorize(Roles = "Admin")]
 
 
-<h3>Admin component</h3>
 
-<p>
-    this page is only accessible to users with 'Admin' Roles
-</p>
+    <h3>Admin component</h3>
 
-@code {
+    <p>
+        this page is only accessible to users with 'Admin' Roles
+    </p>
+
+
+
+
+
+    @code {
+    
+
+        private void CreateRole(string RoleName)
+        {
+            IdentityRole role = new IdentityRole(RoleName);
+            roleManager.CreateAsync(role);
+            
+
+        }
+
+
+        protected override void OnInitialized()
+        {
+            CreateRole("sales");
+        }
+
+
+
 
 
 }
