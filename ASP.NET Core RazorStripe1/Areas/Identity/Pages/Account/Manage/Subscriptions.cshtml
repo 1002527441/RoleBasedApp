@@ -1,0 +1,65 @@
+﻿@page
+@model SubscriptionsModel
+@{
+    ViewData["Title"] = "Subscriptions";
+}
+
+<h2>Subcriptions</h2>
+@await Html.PartialAsync("_StatusMessage", Model.StatusMessage)
+<div class="col-sm-12">
+    @{ if (Model.StripeCustomerId != null)
+        {
+            if (Model.Subscriptions.Any())
+            {
+                foreach (var subscription in Model.Subscriptions)
+                {
+                    <div class="alert alert-info">
+                        <strong>Status: @subscription.Status</strong> <p>@subscription.Plan.Nickname : @subscription.Plan.Amount @subscription.Plan.Currency : @subscription.StartDate - @subscription.CurrentPeriodEnd</p>
+                    </div>
+                }
+
+            }
+
+        }
+        else
+        {
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <strong>Hey!</strong>
+                It looks like you don't have any active subcriptions.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+    }
+</div>
+<div class="col-md-4">
+    <form method="post" class="payment-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="SubscriptionProducts" class="control-label"></label>
+            <select asp-for="Input.ProductId" class="form-control subscription-products" asp-items="Model.SubscriptionProducts"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="SubscriptionPlans" class="control-label"></label>
+            <select asp-for="Input.PlanId" class="form-control subscription-plans"></select>
+        </div>
+        <div class="form-group ">
+            <label asp-for="PlanPrice" class="control-label"></label>
+            <span class="form-control plan-price"></span>
+        </div>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="@Model.StripeKey"
+                data-email="@Model.UserEmail"
+                data-name="ASP.NET_Core_RazorStripe1"
+                data-description="ASP.NET_Core_RazorStripe1"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto">
+        </script>
+    </form>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/Subscriptions.js"></script>
+}

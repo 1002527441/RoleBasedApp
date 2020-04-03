@@ -2,9 +2,12 @@
 
 @using  Microsoft.AspNetCore.Identity
 @using BlazorApp15.Data
-    @inject RoleManager<IdentityRole>   roleManager
+@using BlazorStrap
 
-    @attribute [Authorize(Roles = "Admin")]
+@inject RoleManager<IdentityRole>   roleManager
+@inject UserManager<IdentityUser> userManager
+
+@attribute [Authorize(Roles = "Admin")]
 
 
 
@@ -17,26 +20,39 @@
 
 
 
-
     @code {
-    
+
+        private string newRole { get; set; }
+
+        private IEnumerable<IdentityRole> identityRoles;
+        private IEnumerable<IdentityUser> identityUsers;
+
 
         private void CreateRole(string RoleName)
         {
             IdentityRole role = new IdentityRole(RoleName);
             roleManager.CreateAsync(role);
-            
 
+        }
+
+        private void  CreateUser(string userName, string email)
+        {
+            IdentityUser user = new IdentityUser(userName);
+            user.Email = email;
+
+            var result =  userManager.CreateAsync(user, "Pass0123@");
+
+            if (result.IsCompletedSuccessfully)
+            {
+               
+            }
         }
 
 
         protected override void OnInitialized()
         {
-            CreateRole("sales");
+            identityRoles = roleManager.Roles.ToList();
+            identityUsers = userManager.Users.ToList();
         }
-
-
-
-
 
 }

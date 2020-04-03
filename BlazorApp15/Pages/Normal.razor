@@ -1,15 +1,25 @@
 ﻿@page "/normal"
 
 @attribute [Authorize(Roles = "Admin, Normal")]
+@using BlazorApp15.Data
+@inject WeatherForecastService ForecastService
 
 
-<h3>Normal component</h3>
+<h1>Weather Forecast with Summary Parameter</h1>
 
-<p>
-    this page is only accessible to users with 'Admin' and 'Normal' Roles
-</p>
+
 
 @code {
+    WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+
+
+
+
 
 
 }

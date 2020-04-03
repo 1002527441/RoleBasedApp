@@ -15,6 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlazorApp15.Areas.Identity;
 using BlazorApp15.Data;
+using BlazorStrap;
+using Microsoft.AspNetCore.Http;
+using Blazored.LocalStorage;
 
 namespace BlazorApp15
 {
@@ -31,6 +34,20 @@ namespace BlazorApp15
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //services.AddDistributedMemoryCache();  
+            //services.AddSession(options =>
+            //{
+            //    // Set a short timeout for easy testing.
+            //    options.Cookie.Name = "Henry.Session";
+            //    options.IdleTimeout = TimeSpan.FromSeconds(10);
+            //    options.Cookie.HttpOnly = true;
+            //    // Make the session cookie essential
+            //    options.Cookie.IsEssential = true;
+            //});
+
+
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -40,8 +57,24 @@ namespace BlazorApp15
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddBootstrapCss();
+            services.AddSession();
+
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddProtectedBrowserStorage();
+
+
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +94,7 @@ namespace BlazorApp15
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 
