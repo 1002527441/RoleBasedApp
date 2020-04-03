@@ -12,9 +12,10 @@
         <h1>Counter</h1>
         <p>Current count: @currentCount</p>
 
-        <label>@http.HttpContext.Request</label>
+        <h2> Session value is : <label>@sessionText2</label>  </h2>
 
         <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+        <input  type="text"  @bind-value="@sessionText"/>
 
         <button class="btn btn-primary" @onclick="SetSession">SetSession</button>
         <button class="btn btn-primary" @onclick="GetSession">GetSession</button>
@@ -27,6 +28,9 @@
 @code {
 
 
+    private string sessionText;
+    private string sessionText2;
+
     private int currentCount = 0;
 
     private void IncrementCount()
@@ -37,22 +41,22 @@
 
     private async Task GetSession()
     {
-        string sValue1 = http.HttpContext.Session.GetString("name");
-        string sValue2 = await sessionStore.GetAsync<string>("name");
-        string sValue3 = await localStorage.GetAsync<string>("localName");
+        //string sValue1 = http.HttpContext.Session.GetString("name");
+         sessionText2 = await sessionStore.GetAsync<string>("name");
+         sessionText2 = await localStorage.GetAsync<string>("localName");
     }
 
     private async Task SetSession()
     {
-        await sessionStore.SetAsync("name", "herny.Sesion");
-        await localStorage.SetAsync("localName", "local.Henry");
+        await sessionStore.SetAsync("name", sessionText);
+        await localStorage.SetAsync("localName", sessionText);
         //http.HttpContext.Session.SetString("userName", "henry");
     }
 
 
     private void EnterKeyPress(KeyboardEventArgs e)
     {
-        
+
         currentCount++;
     }
 
