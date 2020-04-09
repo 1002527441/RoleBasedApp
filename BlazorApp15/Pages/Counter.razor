@@ -6,6 +6,8 @@
 @inject ProtectedSessionStorage sessionStore
 @inject ProtectedLocalStorage localStorage
 
+@inject BlazorApp15.Data.StorageServices storageService
+
 
     <div @onkeypress="@(e=>EnterKeyPress(e))">
 
@@ -41,16 +43,17 @@
 
     private async Task GetSession()
     {
-        //string sValue1 = http.HttpContext.Session.GetString("name");
-         sessionText2 = await sessionStore.GetAsync<string>("name");
-         sessionText2 = await localStorage.GetAsync<string>("localName");
+
+
+        sessionText2 = await storageService.GetValueAsync(Data.StorageType.SessionStorage, "name");
+
     }
 
     private async Task SetSession()
     {
-        await sessionStore.SetAsync("name", sessionText);
-        await localStorage.SetAsync("localName", sessionText);
-        //http.HttpContext.Session.SetString("userName", "henry");
+
+        await storageService.SetValueAsync(Data.StorageType.SessionStorage, "name", sessionText);
+        await storageService.SetValueAsync(Data.StorageType.Cookie, "name", sessionText);
     }
 
 

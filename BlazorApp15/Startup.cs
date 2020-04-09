@@ -65,6 +65,7 @@ namespace BlazorApp15
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddProtectedBrowserStorage();
+            services.AddScoped<StorageServices>();
 
 
             //services.Configure<CookiePolicyOptions>(options =>

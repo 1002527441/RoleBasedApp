@@ -3,9 +3,10 @@
 @using BlazorApp15.Data
 @inject WeatherForecastService ForecastService
 
+
 <h1>Weather forecast</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<p>This component demonstrates fetching data from a service. @isTool.ToString()</p>
 
 @if (forecasts == null)
 {
@@ -13,34 +14,77 @@
 }
 else
 {
-    <table class="table">
-        <thead>
+    <BSTable @ref="bTable"  IsSmall="true">
+        <BSTableHead TableHeadType="TableHeadType.Dark">
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th> Date  </th>
+                <th> Temp. (C)  </th>
+                <th> Temp. (F)</th>
+                <th> Summary  </th>
             </tr>
-        </thead>
-        <tbody>
+        </BSTableHead>
+        <BSTableBody>
             @foreach (var forecast in forecasts)
             {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
+            <tr>
+                <td> @forecast.Date.ToShortDateString()  </td>
+                <td>@forecast.TemperatureC </td>
+                <td> @forecast.TemperatureF</td>
+                <td> @forecast.Summary</td>
+            </tr>
             }
-        </tbody>
-    </table>
+        </BSTableBody>
+        <BSTableFooter>
+            <BSButtonGroup>
+                <BSButton Color="Color.Link" OnClick="(()=>PageClick(-1))">Previous</BSButton>
+                <BSButton Color="Color.Link">@CurrentPage</BSButton>
+                <BSButton Color="Color.Link" OnClick="(()=>PageClick(1))">Next</BSButton>
+            </BSButtonGroup>
+        </BSTableFooter>
+
+        <TableFooter 
+                     CurrentPage="@CurrentPage" 
+                     Total="50" 
+                     PageClick="PageClick"
+                     PrevClick="(()=>PageClick(1))"
+                     NextClick="(()=>PageClick(2))">
+
+        </TableFooter>
+    </BSTable>
 }
 
 @code {
+
+    private BSTable bTable { get; set; }
     private WeatherForecast[] forecasts;
+
+
+    public int CurrentPage { get; set; } = 1;
+
+
+    private bool isTool { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+
+
+        await reload(CurrentPage);
+
+    }
+
+    private async Task PageClick(int page)
+    {
+        CurrentPage += page;
+        await reload(page);
+    }
+
+
+    protected async Task reload(int page=1)
+    {
+        forecasts=await ForecastService.GetForecastAsync(DateTime.Now, page);
+    }
+    private void NextClick()
+    {
+        isTool = !isTool;
     }
 }

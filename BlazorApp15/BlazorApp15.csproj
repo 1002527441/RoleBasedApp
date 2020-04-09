@@ -9,6 +9,7 @@
     <PackageReference Include="Blazored.LocalStorage" Version="2.1.5" />
     <PackageReference Include="BlazorGrid" Version="1.1.0" />
     <PackageReference Include="BlazorStrap" Version="1.3.0" />
+    <PackageReference Include="CookieManager" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
@@ -16,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2" />
+    <PackageReference Include="workflowCore" Version="3.1.5" />
   </ItemGroup>
 
 </Project>

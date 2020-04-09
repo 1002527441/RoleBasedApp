@@ -1,0 +1,52 @@
+﻿
+<BSRow>
+    <BSCol LG="9">
+        <BSButtonGroup >
+            <BSButton IsDisabled="@(CurrentPage<=1)" Color="Color.Light" >
+                <span class="  oi oi-media-step-backward" aria-hidden="true"></span>
+            </BSButton>
+
+            <BSButton  IsDisabled="@(CurrentPage<=1)" Color="Color.Light" OnClick="PrevClick">@(CurrentPage)</BSButton>
+
+            <BSButton Color="Color.Light">@(CurrentPage+1)</BSButton>
+            <BSButton Color="Color.Light" OnClick="NextClick">@(CurrentPage+2)</BSButton>
+
+            <BSButton Color="Color.Light" OnClick="LastClick">
+                <span class="oi oi-media-step-forward" style="color:red" aria-hidden="true"></span>
+            </BSButton>
+        </BSButtonGroup>
+    </BSCol>
+    <BSCol LGMLAuto="true">
+        @Range / @Total
+    </BSCol>
+
+</BSRow>
+
+
+@code {
+
+    [Parameter]
+    public int CurrentPage { get; set; }
+
+    [Parameter]
+    public int Total { get; set; }
+
+    [Parameter]
+    public string Range { get; set; }
+
+    [Parameter]
+    public EventCallback<int> PageClick { get; set; }
+
+    [Parameter]
+    public EventCallback PrevClick { get; set; }
+
+    [Parameter]
+    public EventCallback NextClick { get; set; }
+
+    [Parameter]
+    public EventCallback FirstClick { get; set; }
+
+    [Parameter]
+    public EventCallback LastClick { get; set; }
+
+}
