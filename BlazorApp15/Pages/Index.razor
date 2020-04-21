@@ -1,24 +1,19 @@
 ﻿@page "/"
 
+<PageContainer Title="Samples Manager" IsShowSearch="true" SearchClick="OnSearch">
+</PageContainer>
 
-<ul>
-    <li>Last multiple of two = @LastMultipleOfTwo</li>
-    <li>Last multiple of three = @LastMultipleOfThree</li>
-</ul>
+<p>
+    Search Text: @SearchText
+</p>
 
-<Counter2 OnMultipleOfThree=@UpdateLastMultipleOfThreeValue 
-          OnMultipleOfTwoAction=@UpdateLastMultipleOfTwoValue />
-@code
-{
-    int LastMultipleOfTwo = 0;
-    int LastMultipleOfThree = 0;
-    private Task UpdateLastMultipleOfThreeValue(int value)
+@code{
+
+    private string SearchText { get; set; }
+
+    private void OnSearch(string searchText)
     {
-        LastMultipleOfThree = value;
-        return Task.CompletedTask;
-    }
-    private void UpdateLastMultipleOfTwoValue(int value)
-    {
-        LastMultipleOfTwo = value;
+        SearchText = searchText;
+        StateHasChanged();
     }
 }

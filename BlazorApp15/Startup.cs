@@ -18,6 +18,7 @@ using BlazorApp15.Data;
 using BlazorStrap;
 using Microsoft.AspNetCore.Http;
 using Blazored.LocalStorage;
+using System.Net.Http;
 
 namespace BlazorApp15
 {
@@ -45,8 +46,11 @@ namespace BlazorApp15
             //    // Make the session cookie essential
             //    options.Cookie.IsEssential = true;
             //});
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+            services.AddBootstrapCss();
 
-
+            services.AddMvc();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -55,24 +59,26 @@ namespace BlazorApp15
                 .AddRoles<IdentityRole>()             
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddBootstrapCss();
+
             services.AddSession();
 
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
+
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //.AddCookie(opt => { opt.LoginPath = new PathString("/Home/Index/"); });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddProtectedBrowserStorage();
             services.AddScoped<StorageServices>();
 
 
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
 
 
@@ -93,9 +99,16 @@ namespace BlazorApp15
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+      
+
+            app.UseHttpsRedirection();     
+
             app.UseStaticFiles();
+
+      app.UseCookiePolicy();
+   
             app.UseSession();
+      
 
             app.UseRouting();
 

@@ -1,0 +1,59 @@
+﻿<BSContainer Class="alert alert-secondary" IsFluid="true">
+    <BSRow>
+        <BSCol XL="8">
+            <h3><strong>@Title</strong></h3>
+        </BSCol>
+        @if (IsShowSearch)
+        {
+            <BSCol XL="4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for..." 
+                           @bind="SearchText" 
+                           @onkeyup="OnChanged">
+
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" @onclick="OnSearch">Search</button>
+                    </span>
+                </div>
+            </BSCol>
+        }
+
+    </BSRow>
+
+
+    @ChildContent
+
+</BSContainer>
+
+
+@code{
+    [Parameter]
+    public string Title { get; set; }
+
+    // [Parameter]
+    private string SearchText { get; set; }
+
+    [Parameter]
+    public bool IsShowSearch { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public Action<string> SearchClick { get; set; }
+
+
+    private void OnSearch()
+    {
+        SearchClick(SearchText);
+    }
+
+    private void OnChanged(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            SearchClick(SearchText);
+        }
+    }
+}

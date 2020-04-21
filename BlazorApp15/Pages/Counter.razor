@@ -2,11 +2,8 @@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor http
 
-@using Microsoft.AspNetCore.ProtectedBrowserStorage
-@inject ProtectedSessionStorage sessionStore
-@inject ProtectedLocalStorage localStorage
-
 @inject BlazorApp15.Data.StorageServices storageService
+
 
 
     <div @onkeypress="@(e=>EnterKeyPress(e))">
@@ -44,16 +41,17 @@
     private async Task GetSession()
     {
 
-
-        sessionText2 = await storageService.GetValueAsync(Data.StorageType.SessionStorage, "name");
+        //.AspNetCore.Identity.Application:"CfDJ8BPPFMXOdNNMvfE6II2kDNRymmVrIp1sIoCxK7puHFOn8yqBE5FkLzgetVcVdJNryGpz3Hs77Iv9mY1awN2WRiPQ7thPxNO1dnwRxP2Jr4QORQdEhdTRNVmMK41GEZlAwm9h6EvOl-BeZ9aHHPJhQaYkUbbqNFcuhmfhXuptz8JEodeI1AxJ0p9QxwqMu0eexK0lmg8TzdL_wY6cZChIfziVFYGk0rILRVFEzNERJBM6ZAqRu-oW0hBqD2sRPX-Qc2RyuSxEmQWPVcJvhDnjsvdecxdxIvg5F7GNNhYzi2V9L-iLsRYMHi7lCSGUHuzbrxzrthMdD4oOuNSxXf8kpH9EuVIhPcD3eHOe2ipaJYZbijeHnQu4zq9f15jiz07iWWrH6pwrd-hSVaDVZPIRnMr6Y37jBrhYFYwx9MXxeMY0cJ3OFFfmPiEg79cnGwCSUviKKZPm3ErEXcAJcYhJR91NH2861ZPHBem9lZaseJ9hLwvPUDcaSoHz5NYyF5jLMPFBAtIrAbMLJuiVgjFqRbuIZygGVrxxiyMXqivLXRNCNJNpi5Wn0dHQhhE14zXjJuxPkXwtynAStRzF37DFrKzKk3VS1LTzywKnJ2L7oZZcR0LDdo1Tfc0txZ79TTuyL5ZgfvJmc8lW8wBd9FkTYKP5O0JOGaZGzJaMllpBcy4RDIrzKhW6oXCTrdaVss6dwn_Kb0VWGGdkYs7Ew_q8tlI"
+        //sessionText2 = await storageService.GetValueAsync(Data.StorageType.SessionStorage, "name");
+        string cookieName = ".AspNetCore.Identity.Application";
+        sessionText2 = await storageService.GetValueAsync(Data.StorageType.Cookie, cookieName);
 
     }
 
     private async Task SetSession()
     {
-
-        await storageService.SetValueAsync(Data.StorageType.SessionStorage, "name", sessionText);
-        await storageService.SetValueAsync(Data.StorageType.Cookie, "name", sessionText);
+        await storageService.SetValueAsync(Data.StorageType.Cookie, "CookieName", sessionText);
+     
     }
 
 

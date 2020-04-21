@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using BlazorStrap;
+using System;
 
 namespace BlazorApp15.Data
 {
@@ -10,7 +11,7 @@ namespace BlazorApp15.Data
     {
         private readonly ProtectedSessionStorage sessionStore;
         private readonly ProtectedLocalStorage localStorage;
-        private readonly IHttpContextAccessor http;
+        private readonly HttpContext httpContext;       
 
         public StorageServices(
             ProtectedSessionStorage _sessionStore, 
@@ -19,7 +20,7 @@ namespace BlazorApp15.Data
         {
             sessionStore = _sessionStore;
             localStorage = _localStorage;
-            http = _http;
+            httpContext = _http.HttpContext;
 
         }
 
@@ -71,31 +72,39 @@ namespace BlazorApp15.Data
 
         #endregion
 
-        private string GetCookie(string key)
+        private async Task<string> GetCookie(string key)
         {          
             if (key == string.Empty) return string.Empty;
             string result = string.Empty;           
-            var success=  http.HttpContext.Request.Cookies.TryGetValue(key, out result);
+            var success= httpContext.Request.Cookies.TryGetValue(key, out result);
             if (string.IsNullOrEmpty(result))
             {
                 result = string.Empty;
             }
       
-            return result;
+            return await Task.FromResult(result);
         }
 
-        private bool SetCookie(string key, string value)
+        
+        public async Task<bool> SetCookie(string key, string value)
         {
             if (key == string.Empty) return false;
-             http.HttpContext.Response.Cookies.Append(key,  value));
-            return true;
+            var options = new CookieOptions { 
+                    Expires= DateTime.Now.AddMilliseconds(1000),           
+                    Path = "/",
+                    HttpOnly = false,
+                    IsEssential = true,
+                };   
+
+            httpContext.Response?.Cookies.Append(key,  value, options);
+             return await Task.FromResult(true);
         }
 
-        private bool ClearCookie(string key)
+        public async Task<bool> ClearCookie(string key)
         {
             if (key == string.Empty) return false;
-             http.HttpContext.Response.Cookies.Delete(key);
-            return true;
+            httpContext.Response.Cookies.Delete(key);
+            return await Task.FromResult(true);
         }
 
 
@@ -107,7 +116,7 @@ namespace BlazorApp15.Data
             switch (type)
             {
                 case StorageType.Cookie:
-                    result=SetCookie(key, value);
+                    result= await SetCookie(key, value);
                     break;
                 case StorageType.SessionStorage:
                     result=await SetSession(key, value);
@@ -130,7 +139,7 @@ namespace BlazorApp15.Data
             switch (type)
             {
                 case StorageType.Cookie:
-                    result= GetCookie(key);
+                    result= await GetCookie(key);
                     break;
                 case StorageType.SessionStorage:
                     result= await GetSession(key);
@@ -153,7 +162,7 @@ namespace BlazorApp15.Data
             switch (type)
             {
                 case StorageType.Cookie:
-                    result = ClearCookie(key);
+                    result = await ClearCookie(key);
                     break;
                 case StorageType.SessionStorage:
                     result = await ClearSession(key);
