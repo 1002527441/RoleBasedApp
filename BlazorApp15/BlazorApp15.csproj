@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2" />
+    <PackageReference Include="Radzen.Blazor" Version="2.6.0" />
     <PackageReference Include="workflowCore" Version="3.1.5" />
   </ItemGroup>
 
