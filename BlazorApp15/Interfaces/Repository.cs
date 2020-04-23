@@ -55,5 +55,10 @@ namespace BlazorApp15.Interfaces
         {
             return _dbset.Any();
         }
+
+        public virtual T FindById(object id)
+        {
+            return  _dbset.Find(id);
+        }
     }
 }

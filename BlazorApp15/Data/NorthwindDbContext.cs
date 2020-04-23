@@ -7,13 +7,13 @@ using BlazorApp15.Entity;
 
 namespace BlazorApp15.Data
 {
-    public partial class NorthwindContext : DbContext
+    public partial class NorthwindDbContext : DbContext
     {
-        public NorthwindContext()
+        public NorthwindDbContext()
         {
         }
 
-        public NorthwindContext(DbContextOptions<NorthwindContext> options)
+        public NorthwindDbContext(DbContextOptions<NorthwindDbContext> options)
             : base(options)
         {
         }

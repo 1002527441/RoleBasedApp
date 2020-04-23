@@ -55,6 +55,9 @@ namespace BlazorApp15
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<NorthwindDbContext>(options =>
+            options.UseSqlServer(
+                Configuration.GetConnectionString("NorthwindConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()             
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -105,7 +108,7 @@ namespace BlazorApp15
 
             app.UseStaticFiles();
 
-      app.UseCookiePolicy();
+            app.UseCookiePolicy();
    
             app.UseSession();
       
