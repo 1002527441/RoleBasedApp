@@ -1,0 +1,139 @@
+﻿{
+   "ContextClassName": "NorthwindContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "DoNotCombineNamespace": false,
+   "IdReplace": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": "Entity",
+   "ProjectRootNamespace": "BlazorApp15",
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Alphabetical list of products]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Categories]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Category Sales for 1997]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Current Product List]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Customer and Suppliers by City]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CustomerCustomerDemo]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CustomerDemographics]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Customers]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Employees]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[EmployeeTerritories]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Invoices]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Order Details Extended]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Order Details]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Order Subtotals]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Orders Qry]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Orders]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Product Sales for 1997]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Products Above Average Price]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Products by Category]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Products]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Quarterly Orders]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Region]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Sales by Category]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Sales Totals by Amount]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Shippers]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Summary of Sales by Quarter]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Summary of Sales by Year]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Suppliers]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Territories]"
+      }
+   ],
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseSpatial": false
+}
