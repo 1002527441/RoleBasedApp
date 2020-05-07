@@ -3,22 +3,23 @@ using BlazorApp15.Entity;
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using BlazorApp15.Entity;
+
 
 namespace BlazorApp15.Data
 {
-    public partial class NorthwindDbContext : DbContext
+    public partial class NorthwindContext : DbContext
     {
-        public NorthwindDbContext()
+        public NorthwindContext()
         {
         }
 
-        public NorthwindDbContext(DbContextOptions<NorthwindDbContext> options)
+        public NorthwindContext(DbContextOptions<NorthwindContext> options)
             : base(options)
         {
         }
 
         public virtual DbSet<AlphabeticalListOfProducts> AlphabeticalListOfProducts { get; set; }
+        public virtual DbSet<Microsoft.EntityFrameworkCore.AutoHistory> AutoHistory { get; set; }
         public virtual DbSet<Categories> Categories { get; set; }
         public virtual DbSet<CategorySalesFor1997> CategorySalesFor1997 { get; set; }
         public virtual DbSet<CurrentProductList> CurrentProductList { get; set; }
@@ -50,11 +51,12 @@ namespace BlazorApp15.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-    
+          
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.EnableAutoHistory(2048);
             modelBuilder.Entity<AlphabeticalListOfProducts>(entity =>
             {
                 entity.HasNoKey();
@@ -78,6 +80,17 @@ namespace BlazorApp15.Data
                 entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
 
                 entity.Property(e => e.UnitPrice).HasColumnType("money");
+            });
+
+            modelBuilder.Entity<Microsoft.EntityFrameworkCore.AutoHistory>(entity =>
+            {
+                entity.Property(e => e.RowId)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TableName)
+                    .IsRequired()
+                    .HasMaxLength(128);
             });
 
             modelBuilder.Entity<Categories>(entity =>

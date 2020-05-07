@@ -18,6 +18,10 @@
       },
       {
          "HasPrimaryKey": true,
+         "Name": "[dbo].[AutoHistory]"
+      },
+      {
+         "HasPrimaryKey": true,
          "Name": "[dbo].[Categories]"
       },
       {

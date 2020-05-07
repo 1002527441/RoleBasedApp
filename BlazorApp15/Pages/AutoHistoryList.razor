@@ -1,0 +1,103 @@
+﻿@page "/autohistory"
+
+@inject BlazorApp15.Data.NorthwindService northService
+@using BlazorApp15.Entity
+
+<PageContainer Title="Auto History">
+
+</PageContainer>
+
+<BSBasicInput InputType="InputType.Select" Value="string.Empty">
+
+    @{
+        foreach (var item in lstTableName)
+        {
+            <option>@item</option>
+        }
+    }
+
+
+</BSBasicInput>
+
+@if (autoHistories == null)
+{
+    <span> Loading data...</span>
+}
+else
+{
+    <BSTable IsBordered="true">
+        <BSTableHead TableHeadType="TableHeadType.Dark">
+            <tr>
+                
+                <th> ID  </th>
+                <th> RowId  </th>
+                <th> TableName</th>
+                <th> Changed  </th>
+                <th> Kind  </th>
+                <th> Created  </th>
+
+            </tr>
+        </BSTableHead>
+        <BSTableBody>
+            @foreach (var history in autoHistories)
+            {
+            <tr>           
+                <td> @history.Id  </td>
+                <td> @history.RowId  </td>
+                <td> @history.TableName  </td>
+                <td> @*@history.Changed*@  
+
+                <table class="table table-bordered">
+                    <thead class="table-striped">
+                        <tr>
+                            <th>key</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ 
+                            var  json = Newtonsoft.Json.JsonConvert.DeserializeObject<AutoHistoryJson>(history.Changed);
+
+                            foreach (var item in json.before)
+                            {
+                                                <tr>
+                                                    <td>@item.Key</td>
+                                                    <td>@item.Value</td>
+                                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                
+                </table>
+                        
+         
+
+
+                </td>
+                <td> @history.Kind  </td>
+                <td> @history.Created  </td>
+            </tr>
+            }
+        </BSTableBody>
+
+    </BSTable>
+
+}
+
+@code {
+    public List<Microsoft.EntityFrameworkCore.AutoHistory> autoHistories { get; set; }
+    public List<string> lstTableName { get; set; }
+
+    protected override void OnInitialized()
+    {
+        autoHistories = northService.GetAutoHistory();
+        lstTableName = autoHistories.Select(x => x.TableName).Distinct().ToList();
+    }
+
+    private void EditClick(int Id)
+    {
+
+    }
+
+}

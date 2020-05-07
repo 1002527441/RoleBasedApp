@@ -1,0 +1,80 @@
+﻿@page "/customers"
+@inject BlazorApp15.Data.NorthwindService northService
+
+@using BlazorApp15.Entity
+
+
+<PageContainer Title="Customer list">
+
+</PageContainer>
+
+@if (customers == null)
+{
+    <span> Loading data...</span>
+}
+else
+{
+<BSTable IsBordered="true" >
+        <BSTableHead TableHeadType="TableHeadType.Dark">
+            <tr>
+                <th>
+                    <BSButton  >Add</BSButton>
+                </th>
+                <th> ID  </th>
+                <th> Name  </th>
+                <th> Company</th>
+                <th> Title  </th>
+                <th> Country  </th>
+                <th> City  </th>
+                <th> Address  </th>
+                <th> Region  </th>
+                <th> Phone  </th>
+                <th> PostalCode  </th>
+                <th> Fax  </th>
+            </tr>
+        </BSTableHead>
+        <BSTableBody>
+            @foreach (var customer in customers)
+            {
+            <tr>
+                <td>
+                    <BSButton OnClick="()=>EditClick(customer.CustomerId)" >Edit</BSButton>
+                    <BSButton>Delete</BSButton>
+                </td>
+                <td> @customer.CustomerId  </td>
+                <td> @customer.ContactName  </td>
+                <td> @customer.CompanyName  </td>
+                <td> @customer.ContactTitle  </td>
+                <td> @customer.Country  </td>
+                <td> @customer.City  </td>
+                <td> @customer.Address  </td>
+                <td> @customer.Region  </td>
+                <td> @customer.Phone  </td>
+                <td> @customer.PostalCode  </td>
+                <td> @customer.Fax  </td>
+            </tr>
+            }
+        </BSTableBody>
+
+</BSTable>
+
+}
+
+@code { 
+
+    public List<Customers> customers { get; set; }
+
+    protected override void OnInitialized()
+    {
+        customers = northService.GetCustomer();
+    }
+
+    private void EditClick(string Id)
+    {
+        var customer = northService.GetSingleCustomer(Id);
+        customer.Phone = "2588858";
+        customer.City = "shenzhen";
+        northService.UpdateCustomer(customer);
+    }
+
+}

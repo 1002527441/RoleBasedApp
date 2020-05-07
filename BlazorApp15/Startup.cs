@@ -19,6 +19,14 @@ using BlazorStrap;
 using Microsoft.AspNetCore.Http;
 using Blazored.LocalStorage;
 using System.Net.Http;
+using Elsa.Activities.Http.Extensions;
+using Elsa.Activities.Timers.Extensions;
+using Microsoft.EntityFrameworkCore.Design;
+using Newtonsoft.Json;
+
+using Jint;
+using System.Runtime;
+using Elsa.Persistence.EntityFrameworkCore.Extensions;
 
 namespace BlazorApp15
 {
@@ -50,12 +58,12 @@ namespace BlazorApp15
             services.AddServerSideBlazor();
             services.AddBootstrapCss();
 
-            services.AddMvc();
+            services.AddMvc(); 
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<NorthwindDbContext>(options =>
+            services.AddDbContext<NorthwindContext>(options =>
             options.UseSqlServer(
                 Configuration.GetConnectionString("NorthwindConnection")));
             services.AddDefaultIdentity<IdentityUser>()
@@ -74,6 +82,11 @@ namespace BlazorApp15
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddProtectedBrowserStorage();
             services.AddScoped<StorageServices>();
+            services.AddScoped<NorthwindService>();
+
+            services.AddElsa()                   
+                .AddHttpActivities()
+                .AddTimerActivities();
 
 
 
@@ -102,7 +115,7 @@ namespace BlazorApp15
                 app.UseHsts();
             }
 
-      
+            app.UseHttpActivities();
 
             app.UseHttpsRedirection();     
 
