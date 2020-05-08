@@ -51,7 +51,7 @@ namespace BlazorApp15.Data
 
         public List<Microsoft.EntityFrameworkCore.AutoHistory> GetAutoHistory()
         {
-            return db.AutoHistory.ToList();
+            return db.AutoHistories.ToList();
         }
     }
 }

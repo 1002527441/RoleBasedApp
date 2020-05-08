@@ -8,7 +8,7 @@ namespace BlazorApp15.Entity
     public class AutoHistoryJson
     {
         public Dictionary<string, string> before { get; set; }
-        public Dictionary<string, string> After { get; set; }
+        public Dictionary<string, string> after { get; set; }
 
     }
 }

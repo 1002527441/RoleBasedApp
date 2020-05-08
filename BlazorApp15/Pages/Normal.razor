@@ -1,25 +1,58 @@
 ﻿@page "/normal"
 
-@attribute [Authorize(Roles = "Admin, Normal")]
-@using BlazorApp15.Data
-@inject WeatherForecastService ForecastService
+<PageContainer Title="Validation">
+
+</PageContainer>
+
+<EditForm Model="@student">
+
+    <div class="row">
+        <div class="col-12">
+            <InputText @bind-Value="@student.Code" />
+            <ValidationMessage For="()=>student.Code" />
+        </div> 
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <InputText @bind-Value="@student.Name" />
+            <ValidationMessage For="()=>student.Name" />
+        </div>
+        </div>
+
+    <div class="row">      
+        <div class="col-12">
+            <button type="submit">submit</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+        </div>
+        </div>
 
 
-<h1>Weather Forecast with Summary Parameter</h1>
+</EditForm>
 
 
 
-@code {
-    WeatherForecast[] forecasts;
+        @code {
 
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-    }
+            @using System.ComponentModel.DataAnnotations;
+
+            public Student student = new Student();
 
 
+            public class Student
+            {
+                [Required]
+                public string Code { get; set; }
 
+                [StringLength(5, ErrorMessage = "it is too long")]
+                public string Name { get; set; }
 
+            }
 
-
-}
+        }

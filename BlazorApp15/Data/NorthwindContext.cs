@@ -19,7 +19,7 @@ namespace BlazorApp15.Data
         }
 
         public virtual DbSet<AlphabeticalListOfProducts> AlphabeticalListOfProducts { get; set; }
-        public virtual DbSet<Microsoft.EntityFrameworkCore.AutoHistory> AutoHistory { get; set; }
+        public virtual DbSet<Microsoft.EntityFrameworkCore.AutoHistory> AutoHistories { get; set; }
         public virtual DbSet<Categories> Categories { get; set; }
         public virtual DbSet<CategorySalesFor1997> CategorySalesFor1997 { get; set; }
         public virtual DbSet<CurrentProductList> CurrentProductList { get; set; }
@@ -57,6 +57,7 @@ namespace BlazorApp15.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.EnableAutoHistory(2048);
+
             modelBuilder.Entity<AlphabeticalListOfProducts>(entity =>
             {
                 entity.HasNoKey();
@@ -91,6 +92,8 @@ namespace BlazorApp15.Data
                 entity.Property(e => e.TableName)
                     .IsRequired()
                     .HasMaxLength(128);
+
+                entity.ToTable("AutoHistory");
             });
 
             modelBuilder.Entity<Categories>(entity =>

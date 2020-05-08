@@ -2,6 +2,7 @@
 
 @inject BlazorApp15.Data.NorthwindService northService
 @using BlazorApp15.Entity
+@using System.Text.Json
 
 <PageContainer Title="Auto History">
 
@@ -52,17 +53,21 @@ else
                         <tr>
                             <th>key</th>
                             <th>Value</th>
+                            <th>Time</th>
                         </tr>
                     </thead>
                     <tbody>
                         @{ 
-                            var  json = Newtonsoft.Json.JsonConvert.DeserializeObject<AutoHistoryJson>(history.Changed);
+                            JsonSerializerOptions options = new JsonSerializerOptions();
+                          
+                            var  json = JsonSerializer.Deserialize<AutoHistoryJson>(history.Changed);
 
                             foreach (var item in json.before)
                             {
                                                 <tr>
                                                     <td>@item.Key</td>
                                                     <td>@item.Value</td>
+                                                    <td>@history.Created.ToLocalTime()</td>
                                                 </tr>
                             }
                         }
